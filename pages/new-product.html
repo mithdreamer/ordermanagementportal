@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yeni Ürün</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+    <header class="header">
+
+        <h1>Yeni Ürün</h1>
+
+        <nav class="navbar">
+            <a href="../index.html">Dashboard</a>
+            <a href="products.html">Ürünler</a>
+            <a href="new-product.html">Yeni Ürün</a>
+            <a href="orders.html">Siparişler</a>
+            <a href="new-order.html">Yeni Sipariş</a>
+        </nav>
+
+    </header>
+
+    <main class="main-content">
+
+        <section class="page-header">
+            <h2>Yeni Ürün Ekle</h2>
+            <p>Sipariş oluşturabilmek için önce ürün kartı tanımlanmalıdır.</p>
+        </section>
+
+        <form class="form-card">
+
+            <div class="form-group">
+                <label for="sku">SKU</label>
+                <input type="text" id="sku" name="sku" placeholder="Örn: SKU-001">
+            </div>
+
+            <div class="form-group">
+                <label for="productName">Ürün Adı</label>
+                <input type="text" id="productName" name="productName" placeholder="Örn: Siyah Tişört">
+            </div>
+
+            <div class="form-group">
+                <label for="category">Kategori</label>
+                <input type="text" id="category" name="category" placeholder="Örn: Giyim">
+            </div>
+
+            <div class="form-group">
+                <label for="salesUnit">Satış Birimi</label>
+                <select id="salesUnit" name="salesUnit">
+                    <option value="">Seçiniz</option>
+                    <option value="Adet">Adet</option>
+                    <option value="Koli">Koli</option>
+                    <option value="Kg">Kg</option>
+                    <option value="Metre">Metre</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="origin">Menşe Ülke</label>
+                <input type="text" id="origin" name="origin" placeholder="Örn: Türkiye">
+            </div>
+
+            <div class="form-group">
+                <label for="hsCode">GTIP / HS Code</label>
+                <input type="text" id="hsCode" name="hsCode" placeholder="Örn: 6109.10">
+            </div>
+
+            <div class="form-group">
+                <label for="supplier">Tedarikçi</label>
+                <input type="text" id="supplier" name="supplier" placeholder="Örn: ABC Tekstil">
+            </div>
+
+            <div class="form-group">
+                <label for="status">Durum</label>
+                <select id="status" name="status">
+                    <option value="Aktif">Aktif</option>
+                    <option value="Pasif">Pasif</option>
+                </select>
+            </div>
+
+            <button type="submit" class="primary-button">Ürünü Kaydet</button>
+
+        </form>
+
+    </main>
+
+</body>
+
+</html>

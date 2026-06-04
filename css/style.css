@@ -92,27 +92,60 @@ body {
 
 .data-table {
     width: 100%;
-
     border-collapse: collapse;
-
     background-color: white;
-
     margin-top: 20px;
 }
 
 .data-table th,
 .data-table td {
-
     border: 1px solid #ddd;
-
     padding: 12px;
-
     text-align: left;
 }
 
 .data-table th {
-
     background-color: #1f2937;
-
     color: white;
+}
+
+/* FORM */
+
+.form-card {
+    background-color: white;
+    padding: 25px;
+    border-radius: 10px;
+    max-width: 600px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.primary-button {
+    background-color: #1f2937;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.primary-button:hover {
+    background-color: #374151;
 }
