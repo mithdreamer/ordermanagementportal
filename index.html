@@ -11,36 +11,50 @@
 
 <body>
 
-    <h1>Order Management Portal</h1>
+    <header class="header">
+        <h1>Order Management Portal</h1>
 
-    <nav>
-        <a href="pages/orders.html">Siparişler</a>
-        <a href="pages/new-order.html">Yeni Sipariş</a>
-    </nav>
+        <nav class="navbar">
+            <a href="index.html">Dashboard</a>
+            <a href="pages/orders.html">Siparişler</a>
+            <a href="pages/new-order.html">Yeni Sipariş</a>
+            <a href="pages/orders.html">Siparişler</a>
+            <a href="pages/new-order.html">Yeni Sipariş</a>
+        </nav>
+    </header>
 
-    <hr>
+    <main class="main-content">
 
-    <h2>Dashboard</h2>
+        <section class="dashboard-hero">
+            <h2>Dashboard</h2>
+            <p>Sipariş süreçlerini buradan takip edebilirsin.</p>
+        </section>
 
-    <div>
-        <h3>Toplam Sipariş</h3>
-        <p>0</p>
-    </div>
+        <section class="dashboard-cards">
 
-    <div>
-        <h3>Bekleyen</h3>
-        <p>0</p>
-    </div>
+            <div class="dashboard-card">
+                <h3>Toplam Ürün</h3>
+                <p>0</p>
+             </div>
 
-    <div>
-        <h3>Yolda</h3>
-        <p>0</p>
-    </div>
+            <div class="dashboard-card">
+                <h3>Toplam Sipariş</h3>
+                <p>0</p>
+            </div>
 
-    <div>
-        <h3>Teslim Edildi</h3>
-        <p>0</p>
-    </div>
+            <div class="dashboard-card">
+                <h3>Bekleyen Sipariş</h3>
+                <p>0</p>
+            </div>
+
+            <div class="dashboard-card">
+                <h3>Yolda Sipariş</h3>
+                <p>0</p>
+            </div>
+
+</section>
+
+    </main>
 
     <script src="js/app.js"></script>
 
