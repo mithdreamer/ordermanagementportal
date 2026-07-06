@@ -1,0 +1,1 @@
+Her sürümde kullanıcıya sunulan yeni özellikler.

@@ -1,0 +1,1 @@
+Yaptığımız tasarım workshop'larının kısa notları. Adeta toplantı tutanağı gibi.

@@ -1,0 +1,1 @@
+Aldığımız önemli mimari kararlar. Örneğin bugün aldığımız "Kod İngilizce, UI çok dilli" kararı gibi.
