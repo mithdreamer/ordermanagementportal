@@ -1,3 +1,5 @@
+Supply Chain Platform is a long-term product vision designed to manage procurement, logistics, warehousing and supply chain operations.
+
 # The goal of this project:
  Not to build another order management application. The goal is to build a modular, scalable and commercial Supply Chain Platform that can evolve with business needs while remaining simple for end users.
 

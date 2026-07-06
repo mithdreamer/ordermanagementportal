@@ -67,7 +67,32 @@ Tedarikçi kayıtlarını tutar.
 - created_at
 - updated_at
 
-## stores
+## product_suppliers
+
+Ürün ve tedarikçi ilişkilerini tutar.
+
+Bir ürün birden fazla tedarikçiden alınabilir.  
+Bir tedarikçi birden fazla ürünü sağlayabilir.  
+Bir ürün için bir ana tedarikçi belirlenebilir.
+
+Tedarikçiye göre teslim şekli, taşıma şekli, satın alma sorumlusu ve ticari koşullar farklı olabilir.
+
+- id
+- company_id
+- product_id
+- supplier_id
+- is_primary_supplier
+- incoterm
+- transport_mode
+- purchase_responsible_user_id
+- lead_time_days
+- minimum_order_quantity
+- currency
+- status
+- created_at
+- updated_at
+
+## locations
 
 Mağaza veya satış noktası kayıtlarını tutar.
 
