@@ -155,6 +155,45 @@ Shipments
 
 These modules can be enabled per company.
 
+Notifications
+Reminders
+Reports
+Audit Logs
+
+---
+## Documents
+
+### Purpose
+
+Manage all business-related documents throughout the supply chain process.
+
+### Main Features
+
+- Invoice Management
+- Packing List
+- Certificate of Origin
+- Bill of Lading
+- Air Waybill
+- CMR
+- Inspection Report
+- Quality Report
+- Customs Declaration
+- Product Photos
+- Attachments
+
+### Dependencies
+
+- Orders
+- Shipments
+- Goods Receipt
+- Customs (Future)
+
+### Future Improvements
+
+- OCR
+- AI Document Classification
+- Version Control
+- Digital Signature
 ---
 
 ## Domestic Trade

@@ -1,50 +1,115 @@
 # Supply Chain Platform Blueprint
 
-**Version:** 1.0  
+**Version:** 2.0  
 **Status:** Draft  
-**Document Owner:** Project Architecture  
-**Project Type:** SaaS Ready Supply Chain Platform
+**Last Updated:** 2026-07-06  
+**Document Owner:** Project Architecture
+
+---
+
+# Table of Contents
+
+1. Vision
+2. Product Philosophy
+3. Product Goals
+4. Design Principles
+5. Platform Architecture
+6. Platform Domains
+7. Core Modules
+8. Optional Modules
+9. Business Flow
+10. Master Data
+11. Operations
+12. Documents
+13. Communication
+14. Reporting
+15. Governance
+16. Artificial Intelligence
+17. Multi-Company SaaS Architecture
+18. Technology Stack
+19. Database Vision
+20. API Vision
+21. Security
+22. Development Roadmap
+23. Long-Term Vision
 
 ---
 
 # 1. Vision
 
-## Purpose
+Supply Chain Platform is a modular web-based application designed to manage end-to-end supply chain operations.
 
-Supply Chain Platform is a web-based application designed to manage the complete lifecycle of products, suppliers, purchase orders, shipments, customs processes and final delivery.
+The platform covers the complete lifecycle of products, suppliers, purchase orders, logistics, customs processes, warehouse operations and final delivery.
 
-The first release will focus on domestic purchasing operations while the architecture will be designed from day one to support international trade, import/export processes and multi-company SaaS deployment.
-
----
-
-# 2. Product Vision
-
-The platform aims to become a modular Supply Chain Management solution that can be used by:
-
-- Small Businesses
-- Retail Companies
-- Manufacturing Companies
-- Distribution Companies
-- Import / Export Companies
-- Customs Brokerage Companies (Future)
+The architecture is designed to support future commercial SaaS deployment.
 
 ---
 
-# 3. Development Philosophy
+# 2. Product Philosophy
 
-The project follows four fundamental principles.
+The project follows one simple philosophy:
+
+> Build simple today. Scale tomorrow.
+
+Every design decision should prioritize:
+
+- Simplicity
+- Maintainability
+- Scalability
+- Flexibility
+- Reusability
+
+The goal is not to build a large ERP system.
+
+The goal is to build a modular platform that can evolve into an Enterprise Supply Chain Platform.
+
+---
+
+# 3. Product Goals
+
+The platform should enable companies to manage:
+
+- Products
+- Suppliers
+- Locations
+- Purchase Orders
+- Shipments
+- Goods Receipts
+- Documents
+- Reports
+- Notifications
+- Audit Logs
+
+Future versions will include:
+
+- Warehouse Management
+- Inventory
+- Manufacturing
+- Customs
+- Finance
+- AI Assistant
+
+---
+
+# 4. Design Principles
 
 ## Simplicity
 
-Keep the user interface simple.
+Keep user interfaces clean.
+
+---
 
 ## Scalability
 
-Every module must be expandable.
+Every module must support future expansion.
+
+---
 
 ## Modularity
 
-Every feature should be implemented as an independent module.
+Each business capability should be implemented as an independent module.
+
+---
 
 ## Reusability
 
@@ -52,44 +117,11 @@ Reusable components should always be preferred.
 
 ---
 
-# 4. Core Business Flow
+## Domain Driven Thinking
 
-```
-Demand Planning (MRP)
-        │
-        ▼
-Purchase Request
-        │
-        ▼
-Purchase Order
-        │
-        ▼
-Supplier Confirmation
-        │
-        ▼
-Production / Preparation
-        │
-        ▼
-Invoice
-        │
-        ▼
-Shipment
-        │
-        ▼
-Arrival
-        │
-        ▼
-Customs Process
-        │
-        ▼
-Warehouse / Factory / Store
-        │
-        ▼
-Goods Receipt
-        │
-        ▼
-Final Customer
-```
+Business processes drive software architecture.
+
+Screens are built around business domains rather than isolated pages.
 
 ---
 
@@ -98,26 +130,47 @@ Final Customer
 ```
 Browser
 
-        │
+↓
 
 Frontend
-HTML
-CSS
-JavaScript
 
-        │
+↓
 
 REST API
 
-        │
+↓
 
 Backend
+
+↓
+
+Database
+```
+
+Technology flow
+
+```
+HTML
+
+↓
+
+CSS
+
+↓
+
+JavaScript
+
+↓
+
 Node.js
+
+↓
+
 Express
 
-        │
+↓
 
-PostgreSQL Database
+PostgreSQL
 ```
 
 Future
@@ -131,348 +184,376 @@ Nginx
 
 ↓
 
-Cloud Deployment
+Cloud
+
+↓
+
+Kubernetes (Future)
 ```
 
 ---
 
-# 6. Platform Modules
+# 6. Platform Domains
 
-## Core Modules
+The platform is divided into business domains.
 
-```
-Dashboard
+## Master Data
 
-Products
-
-Suppliers
-
-Locations
-
-Orders
-
-Shipments
-
-Goods Receipt
-```
+- Companies
+- Users
+- Products
+- Suppliers
+- Locations
 
 ---
 
-## Future Modules
+## Operations
+
+- Purchase Orders
+- Order Items
+- Shipments
+- Goods Receipt
+
+---
+
+## Documents
+
+- Business Documents
+- Attachments
+- Customs Documents
+
+---
+
+## Communication
+
+- Notifications
+- Email
+- Reminders
+
+---
+
+## Reporting
+
+- Dashboards
+- Reports
+- KPIs
+- Analytics
+
+---
+
+## Governance
+
+- Roles
+- Permissions
+- Audit Logs
+- Settings
+
+---
+
+## Artificial Intelligence
+
+- AI Assistant
+- OCR
+- Shipment Prediction
+- Decision Support
+
+---
+
+# 7. Core Modules
+
+The following modules are available for every company.
+
+- Dashboard
+- Products
+- Suppliers
+- Locations
+- Orders
+- Shipments
+- Goods Receipt
+- Documents
+- Notifications
+- Reports
+- Audit Logs
+
+---
+
+# 8. Optional Modules
+
+These modules may be enabled depending on company requirements.
+
+- Inventory
+- Warehouse
+- Manufacturing
+- Customs
+- Finance
+- CRM
+- Supplier Portal
+- Customer Portal
+- API Marketplace
+
+---
+
+# 9. Business Flow
 
 ```
-Inventory
+Demand Planning
 
-Warehouse
+↓
+
+Purchase Request
+
+↓
+
+Purchase Order
+
+↓
+
+Supplier Confirmation
+
+↓
+
+Production
+
+↓
+
+Invoice
+
+↓
+
+Shipment
+
+↓
+
+Arrival
+
+↓
 
 Customs
 
-Finance
+↓
 
-Reports
+Warehouse
 
-Notifications
+↓
 
-AI Assistant
+Goods Receipt
 
-Documents
+↓
 
-CRM
-
-Supplier Portal
-
-Customer Portal
+Customer Delivery
 ```
 
 ---
 
-# 7. Master Data
+# 10. Master Data
 
-Master Data contains information shared across the entire platform.
+Master Data contains business information shared across the platform.
 
-## Products
+Includes
 
-Responsible for product master records.
+- Companies
+- Users
+- Products
+- Suppliers
+- Locations
 
-Main fields
-
-- SKU
-- Product Name
-- Category
-- Brand
-- Sales Unit
-- Country Of Origin
-- HS Code
-- Supplier
-- Status
+These records are maintained independently from operational transactions.
 
 ---
 
-## Suppliers
+# 11. Operations
 
-Responsible for supplier management.
+Daily business processes.
 
-Main fields
+Includes
 
-- Supplier Code
-- Company Name
-- Short Name
-- Country
-- City
-- Contact Person
-- Phone
-- Email
-- Website
-- Status
+- Purchase Orders
+- Order Items
+- Shipments
+- Goods Receipt
 
----
+Future
 
-## Locations
-
-Represents every physical destination.
-
-Location Types
-
-- Store
-- Factory
-- Warehouse
-- Customer
-
-Main fields
-
-- Location Code
-- Location Name
-- Country
-- City
-- Address
-- Status
+- Inventory Transactions
+- Warehouse Transfers
+- Manufacturing Orders
 
 ---
 
-# 8. Operations
+# 12. Documents
 
-## Purchase Orders
+Documents are treated as first-class business entities.
 
-Responsible for purchase order management.
+Supported document types include:
 
-Main fields
+- Invoice
+- Packing List
+- Bill of Lading
+- Air Waybill
+- CMR
+- Customs Declaration
+- Certificate of Origin
+- Inspection Report
+- Quality Report
+- Product Photos
+- Attachments
 
-- Order Number
-- Order Date
-- Required Delivery Date
-- Supplier
-- Destination
-- Status
+Future capabilities:
+
+- OCR
+- AI Classification
+- Version Control
+- Digital Signature
 
 ---
 
-## Order Items
+# 13. Communication
 
-Each Purchase Order may contain multiple products.
+Communication modules include:
 
-Relationship
+- Email Notifications
+- System Notifications
+- Scheduled Reminders
+
+Examples
+
+- Supplier Confirmation Reminder
+- Delivery Reminder
+- Customs Arrival Notification
+- Goods Receipt Reminder
+
+---
+
+# 14. Reporting
+
+Reports provide operational visibility.
+
+Examples
+
+- Open Purchase Orders
+- Delayed Shipments
+- Supplier Performance
+- Product Analysis
+- Delivery Performance
+- Purchasing KPIs
+
+Future
+
+- Power BI Integration
+- Custom Report Builder
+
+---
+
+# 15. Governance
+
+Governance ensures platform integrity.
+
+Includes
+
+- User Roles
+- Permissions
+- Audit Logs
+- Company Settings
+
+Every important business action should be traceable.
+
+Example
 
 ```
-1 Purchase Order
+09:45
+
+Order Created
 
 ↓
 
-N Order Items
-```
+10:15
 
-Main fields
-
-- SKU
-- Quantity
-- Confirmed Quantity
-- Delivered Quantity
-- Remaining Quantity
-
----
-
-## Shipments
-
-Shipments are independent from Purchase Orders.
-
-Relationship
-
-```
-1 Purchase Order
+Supplier Changed
 
 ↓
 
-N Shipments
-```
+11:20
 
-This allows partial deliveries.
-
-Shipment fields
-
-- Shipment Number
-- Shipment Date
-- ETA
-- ATA
-- Transport Mode
-- Status
-
----
-
-## Goods Receipt
-
-Represents physical receipt of goods.
-
-Fields
-
-- Receipt Number
-- Receipt Date
-- Received Quantity
-- Received By
-- Status
-
----
-
-# 9. Order Lifecycle
-
-```
-Draft
+Shipment Created
 
 ↓
 
-Waiting Supplier Confirmation
-
-↓
-
-Confirmed
-
-↓
-
-Partially Prepared
-
-↓
-
-Ready To Ship
-
-↓
-
-In Transit
-
-↓
-
-Arrived
-
-↓
-
-Delivered
-
-↓
+15:30
 
 Goods Receipt Completed
-
-↓
-
-Closed
-```
-
-Alternative status
-
-```
-Cancelled
-Returned
 ```
 
 ---
 
-# 10. International Trade Readiness
+# 16. Artificial Intelligence
 
-Although Version 1.0 focuses on domestic purchasing, the architecture must support international operations.
+Future AI capabilities include:
 
-Prepared fields
-
-- HS Code
-- Country Of Origin
-- Currency
-- Incoterm
-- Customs Status
-- Arrival Status
-
-Future customs module
-
-- Customs Declaration
-- Bonded Warehouse
-- Temporary Import
-- Export
-- Transit
-- ATA Carnet
-- Inward Processing Relief
-- Authorized Economic Operator
+- Shipment Delay Prediction
+- OCR
+- Customs Assistant
+- GTIP Recommendation
+- Supplier Performance Analysis
+- Purchasing Recommendations
+- Risk Detection
+- AI Chat Assistant
 
 ---
 
-# 11. Multi-Company Architecture
+# 17. Multi-Company SaaS Architecture
 
-The platform will support multiple companies.
+Every business record belongs to one company.
 
 ```
 Company
 
-│
+↓
 
-├── Products
+Users
 
-├── Suppliers
+↓
 
-├── Locations
+Products
 
-├── Orders
+↓
 
-├── Users
+Orders
+
+↓
+
+Shipments
 ```
 
-Every business record must belong to one company.
+Every business table contains:
 
 ```
 company_id
 ```
 
-This enables SaaS deployment.
+Company capabilities determine enabled modules.
+
+Example
+
+Company A
+
+- Domestic Trade
+
+Company B
+
+- Import
+- Customs
+
+Company C
+
+- Manufacturing
+- Warehouse
+- AI
 
 ---
 
-# 12. User Roles
+# 18. Technology Stack
 
-## Super Admin
-
-Platform owner.
-
----
-
-## Company Admin
-
-Responsible for company configuration.
-
----
-
-## Operations User
-
-Daily operations.
-
----
-
-## Viewer
-
-Read-only access.
-
-Future roles
-
-- Warehouse User
-- Supplier User
-- Customs User
-
----
-
-# 13. Technology Stack
-
-## Frontend
+Frontend
 
 - HTML
 - CSS
@@ -483,143 +564,176 @@ Future
 - React
 - Next.js
 
----
-
-## Backend
+Backend
 
 - Node.js
 - Express
 
----
-
-## Database
+Database
 
 - PostgreSQL
 
----
+Deployment
 
-## Repository
+- Vercel
+- Render
+- Supabase
+- Neon
+
+Version Control
 
 - Git
 - GitHub
 
 ---
 
-## Deployment
+# 19. Database Vision
 
-Frontend
+Database design follows these principles.
 
-- Vercel
+- UUID Primary Keys
+- Foreign Key Integrity
+- Multi-Tenant Support
+- Normalized Structure
+- Business Relationships First
 
-Backend
+Bridge tables will be used whenever many-to-many relationships exist.
 
-- Render
+Example
 
-Database
+```
+Products
 
-- Supabase
-- Neon
+↓
 
----
+Product Suppliers
 
-# 14. Business Rules
+↓
 
-Examples
-
-- SKU must be unique.
-- Passive products cannot be ordered.
-- Passive suppliers cannot receive new purchase orders.
-- Every Purchase Order must contain at least one item.
-- Purchase Orders may be partially delivered.
-- One Purchase Order may contain multiple Shipments.
-- Goods Receipt is mandatory before closing an order.
+Suppliers
+```
 
 ---
 
-# 15. Roadmap
+# 20. API Vision
 
-## Phase 1
+The platform will expose REST APIs.
 
-Static User Interface
+Example endpoints
 
----
+```
+GET /products
 
-## Phase 2
+POST /products
 
-JavaScript
+GET /orders
 
-LocalStorage
+POST /orders
 
----
+GET /shipments
 
-## Phase 3
+POST /shipments
+```
 
-REST API
+Future
 
----
-
-## Phase 4
-
-PostgreSQL
-
----
-
-## Phase 5
-
-Authentication
-
-Authorization
+- Public API
+- Webhooks
+- API Marketplace
 
 ---
 
-## Phase 6
+# 21. Security
 
-Cloud Deployment
+The platform should support:
 
----
-
-## Phase 7
-
-SaaS Platform
-
----
-
-## Phase 8
-
-AI Powered Supply Chain
+- Authentication
+- Authorization
+- Role Based Access Control
+- Password Hashing
+- Audit Logging
+- Session Management
+- Multi-Factor Authentication (Future)
 
 ---
 
-# 16. Long-Term Vision
+# 22. Development Roadmap
 
-The goal is not only to build an Order Management System.
+Phase 1
 
-The long-term vision is to build a complete, modular and scalable Supply Chain Platform that can evolve into a commercial SaaS product.
+- Static UI
+
+Phase 2
+
+- JavaScript
+- LocalStorage
+
+Phase 3
+
+- Backend API
+
+Phase 4
+
+- PostgreSQL
+
+Phase 5
+
+- Authentication
+
+Phase 6
+
+- Cloud Deployment
+
+Phase 7
+
+- SaaS
+
+Phase 8
+
+- AI
+
+---
+
+# 23. Long-Term Vision
+
+The long-term objective is to build a commercial Enterprise Supply Chain Platform.
 
 Future ecosystem
 
 ```
 Supply Chain Platform
 
-├── Core Platform
+├── Master Data
+
+├── Operations
 
 ├── Inventory
 
 ├── Warehouse
 
+├── Manufacturing
+
 ├── Customs
 
 ├── Finance
 
+├── Documents
+
+├── Communication
+
 ├── Reporting
 
-├── AI Assistant
+├── Governance
+
+├── Artificial Intelligence
 
 └── API Marketplace
 ```
+
+The platform should remain modular, scalable and easy to maintain.
 
 ---
 
 # Design Motto
 
-> **Think Simple. Build Modular. Scale Forever.**
+> **Think Simple. Design Smart. Build Modular. Scale Forever.**

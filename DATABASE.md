@@ -1,27 +1,94 @@
-# Database Design Draft
+# Database Design
 
-Bu dosya Order Management Portal için ilk veritabanı modeli taslağını açıklar. Gelecekte PostgreSQL kullanılması hedeflenmektedir.
+**Version:** 1.1  
+**Status:** Draft
 
-SaaS yapısı için `company_id` alanı kritik öneme sahiptir. Birden fazla şirket aynı sistemi kullandığında, iş verileri `company_id` ile birbirinden ayrılacaktır.
+This document defines the logical database model of the Supply Chain Platform.
 
-## companies
+The first implementation will use PostgreSQL.
 
-Şirket veya müşteri hesaplarını tutar.
+The system is designed for multi-company SaaS architecture. Every business record belongs to a company through the `company_id` field.
+
+---
+
+# Database Principles
+
+- Every business table must contain `company_id`.
+- Primary keys should use UUID.
+- Foreign keys should always enforce data integrity.
+- Business logic should not be duplicated across tables.
+- Many-to-many relationships should use bridge tables.
+- Tables should be normalized unless a justified optimization is required.
+
+---
+
+# companies
+
+## Purpose
+
+Stores company / tenant information.
+
+A company represents a business account using the platform.
+
+## Fields
 
 - id
 - name
 - legal_name
 - tax_number
+- tax_office
 - email
 - phone
+- website
+- country
+- city
 - address
+- default_language
+- default_currency
+- timezone
 - status
 - created_at
 - updated_at
 
-## users
+## Relationships
 
-Sistem kullanıcılarını tutar.
+```
+Company (1) -------- (N) Users
+
+Company (1) -------- (N) Products
+
+Company (1) -------- (N) Suppliers
+
+Company (1) -------- (N) Locations
+
+Company (1) -------- (N) Orders
+
+Company (1) -------- (N) Shipments
+
+Company (1) -------- (N) Documents
+
+Company (1) -------- (N) Audit Logs
+
+Company (1) -------- (N) Company Modules
+```
+
+## Business Notes
+
+A company is the main tenant of the SaaS platform.
+
+All business data must belong to a company.
+
+Company-level defaults such as language, currency and timezone are stored in this table.
+
+---
+
+# users
+
+## Purpose
+
+Stores platform users.
+
+## Fields
 
 - id
 - company_id
@@ -34,26 +101,126 @@ Sistem kullanıcılarını tutar.
 - created_at
 - updated_at
 
-## products
+## Relationships
 
-Ürün kayıtlarını tutar.
+```
+Company (1) -------- (N) Users
+
+Users (1) -------- (N) Product Suppliers
+```
+
+## Business Notes
+
+Purchase responsible users are assigned through Product Suppliers.
+
+---
+
+# products
+
+## Purpose
+
+Stores product master data.
+
+## Fields
 
 - id
 - company_id
-- name
 - sku
+- name
+- description
 - barcode
-- category
-- unit
-- price
-- currency
+- category_id
+- brand_id
+- base_unit_id
+- sales_unit_id
+- purchase_unit_id
+- hs_code
+- country_of_origin
 - status
 - created_at
 - updated_at
 
-## suppliers
+## Relationships
 
-Tedarikçi kayıtlarını tutar.
+Company (1) -------- (N) Products
+
+Product Categories (1) -------- (N) Products
+
+Brands (1) -------- (N) Products
+
+Units (1) -------- (N) Products
+
+Products (1) -------- (N) Product Suppliers
+
+Products (1) -------- (N) Order Items
+
+Products (1) -------- (N) Product Documents (Future)
+
+Products (1) -------- (N) Inventory Transactions (Future)
+
+## Business Notes
+
+Products contain only master data.
+
+Commercial purchasing information belongs to Product Suppliers.
+
+## Future Improvements
+
+- Product Variants
+- Product Images
+- Product Documents
+
+---
+## product_categories
+
+- id
+- company_id
+- parent_category_id
+- category_code
+- category_name
+- description
+- status
+- created_at
+- updated_at
+
+---
+
+## units
+
+- id
+- company_id
+- unit_code
+- unit_name
+- symbol
+- unit_type
+- decimal_precision
+- status
+- created_at
+- updated_at
+
+---
+
+## product_unit_conversions
+
+- id
+
+- company_id
+
+product_id
+
+from_unit_id
+
+to_unit_id
+
+conversion_rate
+
+# suppliers
+
+## Purpose
+
+Stores supplier information.
+
+## Fields
 
 - id
 - company_id
@@ -67,15 +234,29 @@ Tedarikçi kayıtlarını tutar.
 - created_at
 - updated_at
 
-## product_suppliers
+## Relationships
 
-Ürün ve tedarikçi ilişkilerini tutar.
+```
+Company (1) -------- (N) Suppliers
 
-Bir ürün birden fazla tedarikçiden alınabilir.  
-Bir tedarikçi birden fazla ürünü sağlayabilir.  
-Bir ürün için bir ana tedarikçi belirlenebilir.
+Suppliers (1) ------ (N) Product Suppliers
 
-Tedarikçiye göre teslim şekli, taşıma şekli, satın alma sorumlusu ve ticari koşullar farklı olabilir.
+Suppliers (1) ------ (N) Orders
+```
+
+---
+
+# product_suppliers
+
+## Purpose
+
+Stores commercial relationships between products and suppliers.
+
+One product may have multiple suppliers.
+
+One supplier may provide multiple products.
+
+## Fields
 
 - id
 - company_id
@@ -92,9 +273,47 @@ Tedarikçiye göre teslim şekli, taşıma şekli, satın alma sorumlusu ve tica
 - created_at
 - updated_at
 
-## locations
+## Relationships
 
-Mağaza veya satış noktası kayıtlarını tutar.
+```
+Products (1) -------- (N) Product Suppliers
+
+Suppliers (1) ------- (N) Product Suppliers
+
+Users (1) ----------- (N) Product Suppliers
+
+Product Suppliers (1) ---- (N) Order Items
+```
+
+## Business Notes
+
+Commercial information depends on the supplier.
+
+Different suppliers may have different:
+
+- Incoterms
+- Transport Modes
+- Purchase Responsible
+- Lead Times
+- Minimum Order Quantities
+
+---
+
+# locations
+
+## Purpose
+
+Stores every physical location.
+
+## Location Types
+
+- Store
+- Factory
+- Warehouse
+- Customer
+- Bonded Warehouse
+
+## Fields
 
 - id
 - company_id
@@ -108,14 +327,28 @@ Mağaza veya satış noktası kayıtlarını tutar.
 - created_at
 - updated_at
 
-## orders
+## Relationships
 
-Sipariş ana kayıtlarını tutar.
+```
+Company (1) -------- (N) Locations
+
+Locations (1) ------ (N) Orders
+```
+
+---
+
+# orders
+
+## Purpose
+
+Stores purchase order headers.
+
+## Fields
 
 - id
 - company_id
 - order_number
-- store_id
+- location_id
 - supplier_id
 - order_date
 - expected_delivery_date
@@ -126,23 +359,76 @@ Sipariş ana kayıtlarını tutar.
 - created_at
 - updated_at
 
-## order_items
+## Relationships
 
-Sipariş kalemlerini tutar.
+```
+Company (1) -------- (N) Orders
+
+Suppliers (1) ------ (N) Orders
+
+Locations (1) ------ (N) Orders
+
+Orders (1) --------- (N) Order Items
+
+Orders (1) --------- (N) Shipments
+
+Orders (1) --------- (N) Documents
+```
+
+## Business Notes
+
+One Purchase Order belongs to one supplier.
+
+One Purchase Order may contain multiple order items.
+
+---
+
+# order_items
+
+## Purpose
+
+Stores purchase order lines.
+
+## Fields
 
 - id
 - company_id
 - order_id
 - product_id
+- product_supplier_id
 - quantity
+- unit
 - unit_price
 - total_price
+- confirmed_quantity
+- delivered_quantity
+- remaining_quantity
 - created_at
 - updated_at
 
-## shipments
+## Relationships
 
-Gelecekte sevkiyat kayıtlarını tutar.
+```
+Orders (1) --------- (N) Order Items
+
+Products (1) ------- (N) Order Items
+
+Product Suppliers (1) ---- (N) Order Items
+```
+
+## Business Notes
+
+Each order item references both the selected product and the commercial supplier configuration used for that purchase.
+
+---
+
+# shipments
+
+## Purpose
+
+Stores shipment information.
+
+## Fields
 
 - id
 - company_id
@@ -156,9 +442,27 @@ Gelecekte sevkiyat kayıtlarını tutar.
 - created_at
 - updated_at
 
-## documents
+## Relationships
 
-Sipariş, sevkiyat, ithalat/ihracat veya şirket dokümanlarını tutar.
+```
+Orders (1) --------- (N) Shipments
+
+Shipments (1) ------ (N) Documents
+```
+
+## Business Notes
+
+One Purchase Order may be delivered in multiple shipments.
+
+---
+
+# documents
+
+## Purpose
+
+Stores business documents.
+
+## Fields
 
 - id
 - company_id
@@ -171,10 +475,145 @@ Sipariş, sevkiyat, ithalat/ihracat veya şirket dokümanlarını tutar.
 - created_at
 - updated_at
 
-## Notes
+## Relationships
 
-- All primary keys should use a stable unique identifier.
-- Foreign keys should be added between related tables.
-- Business tables should include `company_id` for tenant isolation.
-- Date fields should use consistent timestamp types.
-- Sensitive fields should never be stored as plain text.
+```
+Orders (1) --------- (N) Documents
+
+Shipments (1) ------ (N) Documents
+```
+
+---
+
+# Relationship Summary
+
+```
+Company (1) -------- (N) Users
+
+Company (1) -------- (N) Products
+
+Company (1) -------- (N) Suppliers
+
+Company (1) -------- (N) Locations
+
+Company (1) -------- (N) Orders
+
+Products (1) ------- (N) Product Suppliers
+
+Suppliers (1) ------ (N) Product Suppliers
+
+Users (1) ---------- (N) Product Suppliers
+
+Suppliers (1) ------ (N) Orders
+
+Locations (1) ------ (N) Orders
+
+Orders (1) --------- (N) Order Items
+
+Products (1) ------- (N) Order Items
+
+Product Suppliers (1) ---- (N) Order Items
+
+Orders (1) --------- (N) Shipments
+
+Orders (1) --------- (N) Documents
+
+Shipments (1) ------ (N) Documents
+```
+
+---
+
+# Future Tables
+
+These tables are planned for future versions.
+
+- product_categories
+- product_brands
+- warehouses
+- inventory
+- inventory_transactions
+- customs_declarations
+- customs_items
+- bonded_warehouses
+- invoices
+- invoice_items
+- payments
+- exchange_rates
+- audit_logs
+- notification_templates
+- notification_logs
+- reminders
+- scheduled_tasks
+- reports
+- report_definitions
+- audit_logs
+- product_variants
+- variant_attributes
+- variant_attribute_values
+
+---
+
+# Notes
+
+- Use UUID for all primary keys.
+- All timestamps should use UTC.
+- Sensitive data should never be stored in plain text.
+- Foreign keys must enforce referential integrity.
+- Business data must always be isolated by `company_id`.
+
+---
+
+# modules
+
+## Purpose
+
+Stores platform module definitions.
+
+## Fields
+
+- id
+- module_key
+- module_name
+- description
+- status
+- created_at
+- updated_at
+
+## Relationships
+
+Modules (1) -------- (N) Company Modules
+
+## Business Notes
+
+Modules define platform capabilities such as Import, Export, Warehouse, Finance or AI Assistant.
+
+---
+
+# company_modules
+
+## Purpose
+
+Stores enabled modules for each company.
+
+## Fields
+
+- id
+- company_id
+- module_id
+- is_enabled
+- enabled_at
+- disabled_at
+- created_at
+- updated_at
+
+## Relationships
+
+Company (1) -------- (N) Company Modules
+
+Modules (1) -------- (N) Company Modules
+
+## Business Notes
+
+A company may enable only the modules it needs.
+
+This enables flexible SaaS capability management.
