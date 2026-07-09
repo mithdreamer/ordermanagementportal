@@ -27,3 +27,31 @@ In Domestic Transport
 Delivered
 Goods Receipt Completed
 Closed
+
+## Product Rules
+
+- SKU must be unique within a company.
+- Passive products cannot be added to new orders.
+- A product may have multiple suppliers.
+- A product may have one primary supplier.
+- Commercial terms are stored in product_suppliers, not in products.
+- HS Code is optional for domestic products but required for import/export capable products.
+- Country of Origin is optional for domestic-only products but required for import/export operations.
+- Products should not be physically deleted if they are used in orders.
+
+## Product Variant Rules
+
+- Product variant usage should be optional per company.
+- Some companies may manage products directly without variants.
+- Companies such as textile, footwear or fashion businesses may use variants.
+- Variant attributes may differ by company.
+- Example variant attributes include color, size, material, model and season.
+- Each variant should be able to have its own SKU if required.
+
+## Order Creation Rules
+
+- Open orders must be linked to defined products.
+- A purchase order item cannot be finalized without a valid product reference.
+- If an imported order line contains an unknown SKU, the line must be sent to a review process.
+- In simple usage mode, the system may allow draft product creation during manual order entry.
+- Imported orders from Excel, SAP, email or API should be validated before becoming active purchase orders.

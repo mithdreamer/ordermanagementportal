@@ -459,3 +459,10 @@ Enables
 - Export Orders
 - Export Declaration
 - Certificates
+
+---
+## Integration Module
+- SAP Integration
+- Excel Import
+- Email Order Reading
+- API Import

@@ -171,7 +171,15 @@ Commercial purchasing information belongs to Product Suppliers.
 - Product Documents
 
 ---
-## product_categories
+# product_categories
+
+## Purpose
+
+Stores product category definitions.
+
+Categories may be organized in a hierarchical structure.
+
+## Fields
 
 - id
 - company_id
@@ -183,9 +191,28 @@ Commercial purchasing information belongs to Product Suppliers.
 - created_at
 - updated_at
 
+## Relationships
+
+Company (1) -------- (N) Product Categories
+
+Product Categories (1) -------- (N) Products
+
+Product Categories (1) -------- (N) Product Categories
+
+## Business Notes
+
+Categories are company-specific.
+
+A category may have a parent category.
 ---
 
-## units
+# units
+
+## Purpose
+
+Stores measurement units used by products.
+
+## Fields
 
 - id
 - company_id
@@ -198,21 +225,62 @@ Commercial purchasing information belongs to Product Suppliers.
 - created_at
 - updated_at
 
+## Relationships
+
+Company (1) -------- (N) Units
+
+Units (1) -------- (N) Products
+
+Units (1) -------- (N) Product Unit Conversions
+
+## Business Notes
+
+Units are shared across all products within a company.
+
+Examples:
+
+- PCS
+- KG
+- LITER
+- BOX
+- PALLET
 ---
 
-## product_unit_conversions
+# product_unit_conversions
+
+## Purpose
+
+Stores product-specific unit conversion rules.
+
+## Fields
 
 - id
-
 - company_id
+- product_id
+- from_unit_id
+- to_unit_id
+- conversion_rate
+- status
+- created_at
+- updated_at
 
-product_id
+## Relationships
 
-from_unit_id
+Products (1) -------- (N) Product Unit Conversions
 
-to_unit_id
+Units (1) -------- (N) Product Unit Conversions
 
-conversion_rate
+## Business Notes
+
+Conversions are product-specific.
+
+Example:
+
+1 BOX = 24 PCS
+
+1 PALLET = 48 BOX
+
+---
 
 # suppliers
 
@@ -296,6 +364,111 @@ Different suppliers may have different:
 - Purchase Responsible
 - Lead Times
 - Minimum Order Quantities
+
+## Future Improvements
+
+- Supplier Product Codes
+- Supplier Product Name
+- Supplier Packaging
+- Last Purchase Price
+- Preferred Supplier Ranking
+
+---
+
+# brands
+
+## Purpose
+
+Stores product brand definitions.
+
+## Fields
+
+- id
+- company_id
+- brand_code
+- brand_name
+- description
+- website
+- country_of_origin
+- status
+- created_at
+- updated_at
+
+## Relationships
+
+Company (1) -------- (N) Brands
+
+Brands (1) -------- (N) Products
+
+## Business Notes
+
+Brands are company-specific.
+
+A company may define its own brands or use manufacturer brands.
+
+---
+
+# product_documents
+
+## Purpose
+
+Stores documents related to products.
+
+## Fields
+
+- id
+- company_id
+- product_id
+- document_type
+- document_name
+- file_url
+- version
+- expiry_date
+- uploaded_by
+- created_at
+- updated_at
+
+## Relationships
+
+Products (1) -------- (N) Product Documents
+
+## Business Notes
+
+A product may contain multiple documents.
+
+Example document types:
+
+- Technical Datasheet
+- MSDS
+- Product Catalog
+- Quality Certificate
+- Test Report
+- GTIP Determination Report
+- University Report
+- CE Certificate
+- Declaration of Conformity
+
+---
+
+# product_images
+
+## Purpose
+
+Stores product images.
+
+## Fields
+
+- id
+- company_id
+- product_id
+- image_url
+- image_type
+- sort_order
+- created_at
+
+## Relationships
+
+Products (1) -------- (N) Product Images
 
 ---
 
@@ -381,6 +554,10 @@ One Purchase Order belongs to one supplier.
 
 One Purchase Order may contain multiple order items.
 
+Purchase Orders may contain products from only one supplier.
+
+A supplier may receive multiple Purchase Orders.
+
 ---
 
 # order_items
@@ -418,7 +595,15 @@ Product Suppliers (1) ---- (N) Order Items
 
 ## Business Notes
 
-Each order item references both the selected product and the commercial supplier configuration used for that purchase.
+Each order item references:
+
+- Product
+- Selected Product Supplier
+- Ordered Quantity
+- Purchase Unit
+- Purchase Price
+
+Commercial information is copied from Product Suppliers at the time of ordering.
 
 ---
 
@@ -527,7 +712,6 @@ Shipments (1) ------ (N) Documents
 
 These tables are planned for future versions.
 
-- product_categories
 - product_brands
 - warehouses
 - inventory
@@ -546,7 +730,6 @@ These tables are planned for future versions.
 - scheduled_tasks
 - reports
 - report_definitions
-- audit_logs
 - product_variants
 - variant_attributes
 - variant_attribute_values

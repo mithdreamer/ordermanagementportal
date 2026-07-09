@@ -737,3 +737,39 @@ The platform should remain modular, scalable and easy to maintain.
 # Design Motto
 
 > **Think Simple. Design Smart. Build Modular. Scale Forever.**
+
+Purchase Orders
+
+            ▲
+
+            │
+
+──────────────────────────────────
+
+Manual Entry
+
+Excel Import
+
+SAP Integration
+
+ERP Integration
+
+Email Reader
+
+REST API
+
+Future AI Assistant
+
+──────────────────────────────────
+
+            │
+
+            ▼
+
+Validation Engine
+
+            │
+
+            ▼
+
+Purchase Orders
